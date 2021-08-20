@@ -1,0 +1,21 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>Users</h1>
+    {% if page_obj %}
+        {% for user in page_obj %}
+            <div class="alert alert-warning mt-2">
+                <h3>{{ user.first_name}}</h3>
+                <p>{{ user.last_name }}</p>
+                <p>{{ user.mail }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>We have no entries!</p>
+    {% endif %}
+
+{% endblock %}
