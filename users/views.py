@@ -1,39 +1,41 @@
-from django.core.paginator import Paginator
-from django.http import Http404
-from django.shortcuts import render, redirect
-
+from django.views.generic import ListView, CreateView, DetailView
 from users.forms import UserForm
 from users.models import Users
 
-
-def register_user(request):
-    if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                return redirect('get_users')
-            except:
-                form.add_error(None, 'Account creation error')
-    else:
-        form = UserForm()
-
-    return render(request, 'users/register.html', {'form': form})
+menu = [{'title': "Register", 'url_name': 'register'},
+        {'title': "Users", 'url_name': 'get_users'}]
 
 
-def get_users_by_id(request, user_id):
-    try:
-        user = Users.objects.get(pk=user_id)
-    except:
-        raise Http404()
+class GetUserByID(DetailView):
+    model = Users
+    template_name = 'users/user_by_id.html'
+    pk_url_kwarg = 'user_id'
+    context_object_name = 'user'
 
-    return render(request, 'users/user_by_id.html', {'user': user})
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        return context
 
 
-def get_users(request):
-    user_list = Users.objects.all()
-    paginator = Paginator(user_list, 3)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+class RegisterUser(CreateView):
+    form_class = UserForm
+    template_name = 'users/register.html'
 
-    return render(request, 'users/users.html', {'page_obj': page_obj})
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'User_by_id'
+        context['menu'] = menu
+        return context
+
+
+class GetUsers(ListView):
+    model = Users
+    template_name = 'users/users.html'
+    context_object_name = 'users'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Users'
+        context['menu'] = menu
+        return context

@@ -8,7 +8,7 @@ from users.models import Users
 
 class UsersTests(TestCase):
     def setUp(self):
-        self.c = Client()
+        self.client = Client()
         self.data = {
             'first_name': 'test_post',
             'last_name': 'test_post',
@@ -18,13 +18,13 @@ class UsersTests(TestCase):
         self.user.save()
 
     def test_get_user_by_id(self):
-        response = self.c.get("/api/users/%s" % self.user.pk)
+        response = self.client.get("/api/users1/%s" % self.user.pk)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context['user'], self.user)
 
     def test_register_user(self):
-        self.c.post("/%s" % config('UNIQUE_STR'), data=self.data)
+        self.client.post("/%s" % config('UNIQUE_STR'), data=self.data)
         try:
             user = Users.objects.get(first_name=self.data['first_name'])
         except Users.DoesNotExist:

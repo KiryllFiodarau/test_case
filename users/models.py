@@ -1,3 +1,5 @@
+from django.urls import reverse
+
 from django.db import models
 
 
@@ -8,3 +10,7 @@ class Users(models.Model):
 
     def __str__(self):
         return self.first_name+self.last_name
+
+    def get_absolute_url(self):
+        return reverse('get_user_by_id', kwargs={'user_id': self.pk})
+
