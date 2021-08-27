@@ -10,6 +10,7 @@
         {% for user in users %}
             <div class="alert alert-warning mt-2">
                 <a href="{{user.get_absolute_url}}">{{user.first_name}}</a>
+
             </div>
         {% endfor %}
     {% else %}

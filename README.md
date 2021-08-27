@@ -43,3 +43,5 @@ http://localhost:3000/api/users/1
 ```
  django-admin.py startapp new_app_name
 ```
+
+
