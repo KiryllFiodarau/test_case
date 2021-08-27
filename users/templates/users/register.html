@@ -1,0 +1,21 @@
+{% extends 'users/base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}
+Registration
+{% endblock %}
+
+
+{% block content %}
+<div style="text-align: center;">
+    <h1>Registration</h1>
+
+    <form action="{% url 'register' %}" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    {% endbuttons %}
+    </form>
+</div>
+{% endblock %}
