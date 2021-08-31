@@ -1,4 +1,5 @@
 from django.views.generic import ListView, CreateView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from users.forms import UserForm
 from users.models import Users
 from users.utils import DataMixin
@@ -16,9 +17,10 @@ class GetUserByID(DataMixin, DetailView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class RegisterUser(DataMixin, CreateView):
+class RegisterUser(LoginRequiredMixin, DataMixin, CreateView):
     form_class = UserForm
     template_name = 'users/register.html'
+    login_url = '/admin/'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
