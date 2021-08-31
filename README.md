@@ -39,3 +39,8 @@ http://localhost:3000/api/users/?page=1
 http://localhost:3000/api/users/1
 
 ```
+
+### Create Superuser
+```
+python manage.py createsuperuser
+```
