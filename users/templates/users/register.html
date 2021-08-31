@@ -2,13 +2,13 @@
 {% load bootstrap4 %}
 
 {% block title %}
-Registration
+{{ title }}
 {% endblock %}
 
 
 {% block content %}
 <div style="text-align: center;">
-    <h1>Registration</h1>
+    <h1>{{ title }}</h1>
 
     <form action="{% url 'register' %}" method="post" class="form">
     {% csrf_token %}

@@ -1,12 +1,10 @@
 from django.views.generic import ListView, CreateView, DetailView
 from users.forms import UserForm
 from users.models import Users
-
-menu = [{'title': "Register", 'url_name': 'register'},
-        {'title': "Users", 'url_name': 'get_users'}]
+from users.utils import DataMixin
 
 
-class GetUserByID(DetailView):
+class GetUserByID(DataMixin, DetailView):
     model = Users
     template_name = 'users/user_by_id.html'
     pk_url_kwarg = 'user_id'
@@ -14,28 +12,26 @@ class GetUserByID(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        return context
+        c_def = self.get_user_context(title='GetUserByID')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class RegisterUser(CreateView):
+class RegisterUser(DataMixin, CreateView):
     form_class = UserForm
     template_name = 'users/register.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'User_by_id'
-        context['menu'] = menu
-        return context
+        c_def = self.get_user_context(title='Register')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-class GetUsers(ListView):
+class GetUsers(DataMixin, ListView):
     model = Users
     template_name = 'users/users.html'
     context_object_name = 'users'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Users'
-        context['menu'] = menu
-        return context
+        c_def = self.get_user_context(title='GetUsers')
+        return dict(list(context.items()) + list(c_def.items()))
