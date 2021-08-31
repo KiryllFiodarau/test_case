@@ -8,6 +8,11 @@ class Users(models.Model):
     last_name = models.CharField(max_length=255)
     mail = models.EmailField(null=False, blank=False, unique=True)
 
+    class Meta:
+        verbose_name = 'users'
+        verbose_name_plural = 'users'
+        ordering = ['id']
+
     def __str__(self):
         return self.first_name+self.last_name
 
