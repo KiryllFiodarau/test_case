@@ -1,8 +1,13 @@
 ![Back-end language](https://img.shields.io/badge/python-3.8-yellow)
 ### ENV
 ```
+Linux:
 python3 -m venv  env
 source env/bin/activate
+Windows :
+python -m venv  env
+call env/Scripts/activate.bat
+
 ```
 ### Check ENV
 ```
